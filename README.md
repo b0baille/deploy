@@ -1,6 +1,6 @@
 # Deploy an app
 
-This guide explains how to deploy a ruby app backed by a MySql database behind an Nginx server on a single EC2 instance.
+This guide propose an automated procedure to deploy a ruby app backed by a MySql database behind an Nginx server on a single EC2 instance.
 
 ## 0. Prerequisites
 
@@ -83,6 +83,7 @@ Example:
 APP_VERSION=1 \
 DOCKER_HOST=ec2-54-74-235-87.eu-west-1.compute.amazonaws.com \
 MYSQL_PASSWORD=some_passwords \
+APP_ROOT_DIR="../devops_test" \
 ruby deploy.rb
 ````
 
