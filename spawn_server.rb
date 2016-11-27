@@ -15,6 +15,12 @@ INSTANCE_NAME = ENV["INSTANCE_NAME"] || "test-robin"
 
 MYSQL_PASSWORD = ENV["MYSQL_PASSWORD"]
 
+%w(MYSQL_PASSWORD SECURITY_GROUP KEY_NAME SECRET_ACCESS_KEY ACCESS_KEY).each do |var|
+  if ENV[var] == nil || ENV[var] == 0
+    puts "plase set the #{var} environment variable"
+    exit 1
+  end
+end
 
 client = Aws::EC2::Client.new(
   region: REGION,

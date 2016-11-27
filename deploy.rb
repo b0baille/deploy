@@ -16,6 +16,13 @@ DOCKER_PORT = "2375"
 APP_PORT = "9999" #if this change nginx should be redeployed
 CONTAINER_NAME = "app"
 
+%w(DOCKER_HOST APP_VERSION MYSQL_PASSWORD).each do |var|
+  if ENV[var] == nil || ENV[var] == 0
+    puts "plase set the #{var} environment variable"
+    exit 1
+  end
+end
+
 # utlities ---------------------------------------------------------------------
 def log_info(info)
   puts "-----> #{info}"
