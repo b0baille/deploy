@@ -33,7 +33,7 @@ resp = client.run_instances({
   instance_type: INSTANCE_TYPE,
   key_name: KEY_NAME,
   security_group_ids: [SECURITY_GROUP],
-  user_data: Base64.encode64(File.read("cloud_init.yaml").sub("$MYSQL_PASSWORD", MYSQL_PASSWORD))
+  user_data: Base64.encode64(File.read("cloud_config.yaml").sub("$MYSQL_PASSWORD", MYSQL_PASSWORD))
 });
 
 instance_id = resp.instances[0].instance_id

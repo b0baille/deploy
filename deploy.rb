@@ -123,7 +123,8 @@ if APP_VERSION == 1
 end
 
 # summary
+puts "\n"
 log_info "App version #{APP_VERSION} reachable at http://#{DOCKER_HOST}"
 log_info "To see app logs: #{docker_base_cmd} logs #{app_container}"
 log_info "To run a command in the app environment: #{docker_base_cmd} run -it --net host #{env_hash_to_docker_args(default_app_env)} #{app_image} <command>"
-log_info "To deploy an update run: VERSION=N ruby deploy.rb"
+log_info "To deploy an update run the command again with incremented APP_VERSION config"
