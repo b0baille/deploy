@@ -1,4 +1,4 @@
-# Deploy the app
+# Deploy an app
 
 This guide explains how to deploy a ruby app backed by a MySql database behind an Nginx server on a single EC2 instance.
 
@@ -26,7 +26,7 @@ Keep the security group identifier (i.e: `sg-9d1cd8eb`) we will need it in the n
 
 ## 2. Provision a new server
 
-In this step, we use the `spawn_server.rb` script to launch and provision a new EC2 instance. The script is configurable via environment variables:
+In this step, we use the `spawn_server.rb` script to launch and provision a new EC2 instance. This script is configurable using environment variables:
 
 - `REGION=eu-west-1` AWS region where to create the instance ([see possible values](http://docs.aws.amazon.com/general/latest/gr/rande.html#ec2_region))
 - `ACCESS_KEY` required
@@ -34,7 +34,7 @@ In this step, we use the `spawn_server.rb` script to launch and provision a new 
 - `KEY_NAME` required, a key pair name that can be used to SSH onto the instance
 - `INSTANCE_TYPE=t1.micro` type of the instance ([see possible values](https://aws.amazon.com/ec2/instance-types/))
 - `INSTANCE_NAME=test-robin` name of the instance
-- `MYSQL_PASSWORD` required, the password to use for the Mysql root user
+- `MYSQL_PASSWORD` required, the password to use for the MySql root user
 - `SECURITY_GROUP` required, the identifier of the previously created security group
 
 Go to this directory and run `bundle install`. This will download the `aws-sdk` ruby gem, required by `spawn_server.rb`.
@@ -127,7 +127,7 @@ coreos is a linux distribution specialized in running linux containers and built
 
 It setups the host with a `mysql` database running in a container and storing its data on the host file system at `/opt/data`. The database listen for connections on `localhost:3306` and the root password is given in the script's configuration. More information about the container can be found on the [docker hub](https://hub.docker.com/_/mysql/https://hub.docker.com/_/mysql/https://hub.docker.com/_/mysql/)
 
-It also exposes the docker TCP socket on port 2375. This allow us to communicate remotely with the docker daemon.
+It also exposes the docker daemon on port 2375. This allow us to communicate remotely with the docker daemon.
 
 ### Deploying an app
 
@@ -154,7 +154,7 @@ The script `deploy.rb` uses docker (provided inside `vendor/docker`) to deploy a
 
 ## Why not production ready ?
 
-**Badly secured**. In the guide below we expose the docker daemon on an open TCP port. During security group creation, we restricted the access to only our IP address but this is not enough. An attacker could connect to our docker daemon and manage it (stop container, create new containers ...). The solution to overcome this issue would be to secure the docker daemon socket following [this guide](https://docs.docker.com/engine/security/https/).
+**Badly secured**. In the guide above we expose the docker daemon on an open TCP port. During security group creation, we restricted the access to only our IP address but this is not enough. An attacker could connect to our docker daemon and manage it (stop container, create new containers ...). The solution to overcome this issue would be to secure the docker daemon socket following [this guide](https://docs.docker.com/engine/security/https/).
 
 **No redundancy / no high availability**. Each containers are started with a flag indicating that they should restart on failure. This will allow the app to restart automatically if it crashes for example. This is good, however, if our server crashes, the app will be down and we might lose all our data. This could be addressed by a more complex setup including database backup / multiple running instances / load balancing.
 
